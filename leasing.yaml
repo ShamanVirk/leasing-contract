@@ -125,6 +125,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /customers:
+    description: customer api
+    get:
+      tags:
+        - Customer
+      operationId: getAllCustomers
+      parameters:
+        - name: page
+          description: "paginations could also be done by providing simply the query parameters page and size
+                        for example /customers?page=0&size=10"
+          required: true
+          in: query
+          schema:
+            $ref: '#/components/schemas/PageRequest'
+      responses:
+        200:
+          description: get list of customers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerPageResponse"
 
   /vehicle/{id}:
     summary: get vehicle for id
@@ -237,7 +258,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-
+  /vehicles:
+    description: vehicle api
+    get:
+      tags:
+        - Vehicle
+      operationId: getAllVehicles
+      parameters:
+        - name: page
+          description: "paginations could also be done by providing simply the query parameters page and size
+                              for example /vehicles?page=0&size=10"
+          required: true
+          in: query
+          schema:
+            $ref: '#/components/schemas/PageRequest'
+      responses:
+        200:
+          description: get list of vehicles
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VehiclePageResponse"
 
   /contract/{id}:
     summary: get contract for id
@@ -568,7 +609,8 @@ components:
         - vehicle
         - customer
 
-    ContractOverviewPageResponse:
+    PageResponse:
+      type: object
       properties:
         page:
           type: integer
@@ -585,16 +627,50 @@ components:
             - UNSORTED
             - ASC
             - DESC
-        overviewItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContractOverview'
       required:
         - page
         - size
         - numberOfPages
         - numberOfItems
         - sort
+
+    VehicleItems:
+      type: object
+      properties:
+        overviewItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+
+    CustomerItems:
+      type: object
+      properties:
+        overviewItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+    ContractOverviewItems:
+      type: object
+      properties:
+        overviewItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractOverview'
+
+    VehiclePageResponse:
+      allOf:
+        - $ref: "#/components/schemas/PageResponse"
+        - $ref: "#/components/schemas/VehicleItems"
+    CustomerPageResponse:
+      allOf:
+        - $ref: "#/components/schemas/PageResponse"
+        - $ref: "#/components/schemas/CustomerItems"
+
+    ContractOverviewPageResponse:
+      allOf:
+        - $ref: "#/components/schemas/PageResponse"
+        - $ref: "#/components/schemas/ContractOverviewItems"
+
     ContractOverview:
       type: object
       properties:

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: allane-customer
+  labels:
+    app: allane-customer
+spec:
+  selector:
+    matchLabels:
+      app: allane-customer
+  template:
+    metadata:
+      labels:
+        app: allane-customer
+    spec:
+      containers:
+        - name: allane-customer
+          image: allane-customer-image
+          ports:
+            - containerPort: 8001
+              protocol: TCP
+            - containerPort: 5001  # debugger
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: allane-customer-service
+  name: allane-customer-service
+spec:
+  ports:
+  - name: 9001-8001
+    port: 9001
+    protocol: TCP
+    targetPort: 8001
+  selector:
+    app: allane-customer
+  type: ClusterIP

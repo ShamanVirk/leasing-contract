@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: allane-customer
+  name: allane-leasing
   labels:
-    app: allane-customer
+    app: allane-leasing
 spec:
   selector:
     matchLabels:
-      app: allane-customer
+      app: allane-leasing
   template:
     metadata:
       labels:
-        app: allane-customer
+        app: allane-leasing
     spec:
       containers:
-        - name: allane-customer
-          image: allane-customer-image
+        - name: allane-leasing
+          image: allane-leasing-image
           ports:
             - containerPort: 8001
               protocol: TCP
@@ -25,8 +25,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: allane-customer-service
-  name: allane-customer-service
+    app: allane-leasing-service
+  name: allane-leasing-service
 spec:
   ports:
   - name: 9001-8001
@@ -34,5 +34,5 @@ spec:
     protocol: TCP
     targetPort: 8001
   selector:
-    app: allane-customer
+    app: allane-leasing
   type: ClusterIP

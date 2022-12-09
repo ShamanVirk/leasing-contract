@@ -1,13 +1,13 @@
-package com.allane.leasing.allanecustomer;
+package com.allane.leasing.allaneleasing;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AllaneCustomerApplication {
+public class AllaneLeasingApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AllaneCustomerApplication.class, args);
+		SpringApplication.run(AllaneLeasingApplication.class, args);
 	}
 
 }

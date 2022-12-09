@@ -1,0 +1,42 @@
+# -*- mode: Python -*-
+
+# For more on Extensions, see: https://docs.tilt.dev/extensions.html
+load('ext://restart_process', 'docker_build_with_restart')
+
+# Records the current time, then kicks off a server update.
+# Normally, you would let Tilt do deploys automatically, but this
+# shows you how to set up a custom workflow that measures it.
+
+
+gradlew = "./gradlew"
+if os.name == "nt":
+  gradlew = "gradlew.bat"
+
+local_resource(
+  'allane-leasing-compile',
+  gradlew + ' bootJar && ' +
+  'rm -rf build/jar-staging && ' +
+  'unzip -o build/libs/allane-leasing-0.0.1-SNAPSHOT.jar -d build/jar-staging && ' +
+  'rsync --delete --inplace --checksum -r build/jar-staging/ build/jar',
+  deps=['src', 'build.gradle'])
+
+docker_build_with_restart(
+  'allane-leasing-image',
+  './build/jar',
+  entrypoint=['java', '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5001', '-noverify', '-cp', '.:./lib/*', 'com.allane.leasing.allaneleasing.AllaneLeasingApplication'],
+  dockerfile='./Dockerfile-local',
+  live_update=[
+    sync('./build/jar/BOOT-INF/lib', '/app/lib'),
+    sync('./build/jar/META-INF', '/app/META-INF'),
+    sync('./build/jar/BOOT-INF/classes', '/app'),
+  ],
+)
+
+k8s_yaml('kubernetes.yaml')
+k8s_resource('allane-leasing',
+	port_forwards=[
+	    8001,  # app
+	    5001   # debugger
+	],
+ 	resource_deps=['allane-leasing-compile']
+)

@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: allane-leasing-db-service
+  labels:
+    app: allane-leasing-db-service
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: allane-leasing
+    tier: mysql
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: allane-leasing
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-pass
+  labels:
+    app: allane-leasing
+type: Opaque
+data:
+  #allanevirkleasing
+  username: YWxsYW5ldmlya2xlYXNpbmc=
+  #allanevirkleasingpassword
+  password: YWxsYW5ldmlya2xlYXNpbmdwYXNzd29yZA==
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: allane-leasing-mysql
+  labels:
+    app: allane-leasing
+spec:
+  selector:
+    matchLabels:
+      app: allane-leasing
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: allane-leasing
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim

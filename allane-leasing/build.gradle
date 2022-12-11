@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.6'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'org.openapi.generator' version '6.2.1'
 }
 
 group = 'com.allane.leasing'
@@ -15,8 +16,35 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.openapitools:jackson-databind-nullable:0.2.1'
+	implementation 'io.swagger.core.v3:swagger-annotations:2.2.7'
+	implementation 'javax.validation:validation-api:2.0.1.Final'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$rootDir/../leasing.yaml".toString()
+    outputDir = "$buildDir/generate-sources".toString()
+    apiPackage = "${group}.api"
+    modelPackage = "${group}.model"
+    configOptions = [
+        interfaceOnly: "true"
+    ]
+}
+
+def copyGeneratedSources = tasks.register("copyGeneratedSources", Copy) {
+    from("templates")
+    into(layout.buildDirectory.dir("${openApiGenerate.outputDir.get()}/src/main/java"))
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir(copyGeneratedSources)
+        }
+    }
 }

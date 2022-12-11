@@ -1,4 +1,4 @@
-package com.allane.leasing.allaneleasing;
+package com.allane.leasing;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,4 @@ public class AllaneLeasingApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AllaneLeasingApplication.class, args);
 	}
-
 }

@@ -16,6 +16,9 @@ spec:
       containers:
         - name: allane-leasing
           image: allane-leasing-image
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: local
           ports:
             - containerPort: 8001
               protocol: TCP

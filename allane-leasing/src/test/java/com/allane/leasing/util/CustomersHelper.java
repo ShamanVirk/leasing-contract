@@ -1,9 +1,9 @@
-package com.allane.leasing.integration.util;
+package com.allane.leasing.util;
 
 import com.allane.leasing.model.CustomerPageResponse;
 import com.allane.leasing.model.PageRequest;
 
-public class TestHelper {
+public class CustomersHelper {
     
     public static PageRequest getPageRequest() {
         return new PageRequest();

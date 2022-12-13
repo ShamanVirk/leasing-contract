@@ -1,6 +1,6 @@
 package com.allane.leasing.integration;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -12,20 +12,29 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.allane.leasing.model.Customer;
+import com.allane.leasing.util.CustomerHelper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @SpringBootTest
 @AutoConfigureMockMvc
-class AllaneCustomersIntegrationTests {
+class AllaneCustomerIntegrationTests {
 
     @Autowired
     private MockMvc mockMvc;
+    
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    @DisplayName("TestCase: Get all customers")
+    @DisplayName("TestCase: Create customer")
     @Test
-    void getAllCustomers() throws Exception {
-
+    void createCustomer() throws Exception {
+        Customer newCustomer = CustomerHelper.createCustomer();
         mockMvc.perform(
-                get("/customers"))
-        .andExpect(status().isOk())
+                post("/customer")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(newCustomer)))
+        .andExpect(status().isCreated())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
         .andReturn();
     }

@@ -13,9 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.allane.leasing.controller.service.AllaneCustomersService;
-import com.allane.leasing.integration.util.TestHelper;
 import com.allane.leasing.model.CustomerPageResponse;
 import com.allane.leasing.model.PageRequest;
+import com.allane.leasing.util.CustomersHelper;
 
 @ExtendWith(MockitoExtension.class)
 public class AllaneCustomersTest {
@@ -28,10 +28,10 @@ public class AllaneCustomersTest {
     
     @Test
     void getAllCustomers() throws Exception {
-        PageRequest testPageRequest = TestHelper.getPageRequest();
-        doReturn(TestHelper.getCustomerPageResponse()).when(allaneCustomersService).getAllCustomers(testPageRequest);
+        PageRequest testPageRequest = CustomersHelper.getPageRequest();
+        doReturn(CustomersHelper.getCustomerPageResponse()).when(allaneCustomersService).getAllCustomers(testPageRequest);
 
-        ResponseEntity<CustomerPageResponse> response = allaneCustomersController.getAllCustomers(TestHelper.getPageRequest());
+        ResponseEntity<CustomerPageResponse> response = allaneCustomersController.getAllCustomers(CustomersHelper.getPageRequest());
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(allaneCustomersService).getAllCustomers(testPageRequest);

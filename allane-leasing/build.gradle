@@ -19,12 +19,19 @@ dependencies {
 	implementation 'org.openapitools:jackson-databind-nullable:0.2.1'
 	implementation 'io.swagger.core.v3:swagger-annotations:2.2.7'
 	implementation 'javax.validation:validation-api:2.0.1.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.flywaydb:flyway-core'
+  	implementation 'org.flywaydb:flyway-mysql'
+	implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.0'
+	// ToDo: use testcontainers for integration tests
+	// implementation 'org.testcontainers:mariadb:1.17.6'
+	// testImplementation 'org.testcontainers:junit-jupiter:1.17.6'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
     testLogging {
-		events "PASSED", "SKIPPED", "FAILED", "STANDARD_ERROR"
+		events "PASSED", "SKIPPED", "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
 		afterSuite { desc, result ->
             if (!desc.parent) { // will match the outermost suite
                 def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"

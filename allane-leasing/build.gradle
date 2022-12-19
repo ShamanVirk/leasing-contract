@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.6'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id 'org.openapi.generator' version '6.2.1'
+	//id 'org.flywaydb.flyway' version '7.8.2'
 }
 
 group = 'com.allane.leasing'
@@ -19,12 +20,40 @@ dependencies {
 	implementation 'org.openapitools:jackson-databind-nullable:0.2.1'
 	implementation 'io.swagger.core.v3:swagger-annotations:2.2.7'
 	implementation 'javax.validation:validation-api:2.0.1.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//implementation 'org.flywaydb:flyway-core:9.10.1'
+	//implementation 'org.flywaydb:flyway-mysql:9.10.1'
+	//implementation 'org.flywaydb:flyway-core:7.8.2'
+	//implementation 'com.mysql:mysql-connector-j:8.0.31'
+	implementation 'org.flywaydb:flyway-core'
+  	implementation 'org.flywaydb:flyway-mysql'
+  	// https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
+	implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.0'
+	// https://mvnrepository.com/artifact/org.testcontainers/mariadb
+	implementation 'org.testcontainers:mariadb:1.17.6'
+	// https://mvnrepository.com/artifact/org.testcontainers/junit-jupiter
+	testImplementation 'org.testcontainers:junit-jupiter:1.17.6'
+	
+	
+//implementation('org.postgresql:postgresql')
+	//runtimeOnly 'mysql:mysql-connector-java'
+	//implementation 'org.flywaydb:flyway-core:8.4.4'
+	//implementation 'org.flywaydb:flyway-mysql:8.4.4'
+
 }
+
+/*flyway {
+  url = 'jdbc:mysql://allane-leasing-db-service1:3306'
+  user = 'allane_leasing_user'
+  password = 'allanevirkleasingpassword'
+  schemas = ['allane_leasing']
+}*/
+
 
 tasks.named('test') {
 	useJUnitPlatform()
     testLogging {
-		events "PASSED", "SKIPPED", "FAILED", "STANDARD_ERROR"
+		events "PASSED", "SKIPPED", "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
 		afterSuite { desc, result ->
             if (!desc.parent) { // will match the outermost suite
                 def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
@@ -57,5 +86,8 @@ sourceSets {
         java {
             srcDir(copyGeneratedSources)
         }
+        //resources {
+        //    srcDir("src/main/resources")
+        //}
     }
 }

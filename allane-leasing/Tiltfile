@@ -33,7 +33,6 @@ k8s_yaml(['kubernetes-mariadb.yaml', 'kubernetes.yaml'])
 k8s_resource('allane-leasing-db', port_forwards=[
     3306,  # allane-leasing-db
 ])
-
 k8s_resource('allane-leasing',
 	port_forwards=[
 	    8001,  # app

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: allane-leasing-db
+spec:
+  selector:
+    matchLabels:
+      run: allane-leasing-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: allane-leasing-db
+    spec:
+      containers:
+      - name: allane-leasing-db
+        image: mariadb
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MARIADB_ROOT_PASSWORD
+          value: rootp@$5
+        - name: MARIADB_DATABASE
+          value: allane_leasing
+        - name: MARIADB_USER
+          value: allane_leasing_user
+        - name: MARIADB_PASSWORD
+          value: allanevirkleasingpassword
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: allane-leasing-db
+  labels:
+    run: allane-leasing-db
+spec:
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  type: ClusterIP
+  selector:
+    run: allane-leasing-db
+---

@@ -26,6 +26,10 @@ dependencies {
 	// ToDo: use testcontainers for integration tests
 	// implementation 'org.testcontainers:mariadb:1.17.6'
 	// testImplementation 'org.testcontainers:junit-jupiter:1.17.6'
+	compileOnly('org.projectlombok:lombok')
+	annotationProcessor('org.projectlombok:lombok')
+	testCompileOnly('org.projectlombok:lombok')
+	testAnnotationProcessor('org.projectlombok:lombok')
 }
 
 tasks.named('test') {

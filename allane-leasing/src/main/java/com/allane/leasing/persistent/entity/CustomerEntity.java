@@ -24,7 +24,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class CustomerEntity {
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

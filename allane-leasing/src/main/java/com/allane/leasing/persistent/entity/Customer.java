@@ -1,11 +1,15 @@
 package com.allane.leasing.persistent.entity;
  
-import java.util.Date;
+import java.time.LocalDate;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +39,6 @@ public class Customer {
     private String lastName;
  
     @NotNull
-    @Temporal(TemporalType.DATE)
-    @Column(name = "birthday")
-    private Date birthday;
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 }

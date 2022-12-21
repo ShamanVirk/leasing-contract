@@ -30,6 +30,9 @@ dependencies {
 	annotationProcessor('org.projectlombok:lombok')
 	testCompileOnly('org.projectlombok:lombok')
 	testAnnotationProcessor('org.projectlombok:lombok')
+	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+	implementation "org.projectlombok:lombok-mapstruct-binding:0.2.0"
 }
 
 tasks.named('test') {
@@ -54,7 +57,8 @@ openApiGenerate {
     apiPackage = "${group}.api"
     modelPackage = "${group}.model"
     configOptions = [
-        interfaceOnly: "true"
+        interfaceOnly: "true",
+        additionalModelTypeAnnotations: "@lombok.NoArgsConstructor @lombok.AllArgsConstructor"
     ]
 }
 

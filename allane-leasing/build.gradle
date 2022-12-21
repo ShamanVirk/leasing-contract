@@ -71,6 +71,7 @@ sourceSets {
     main {
         java {
             srcDir(copyGeneratedSources)
+            srcDir("build/generated/sources/annotationProcessor/java/main")
         }
     }
 }

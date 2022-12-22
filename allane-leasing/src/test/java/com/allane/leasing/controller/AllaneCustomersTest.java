@@ -12,9 +12,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.allane.leasing.controller.service.AllaneCustomersService;
 import com.allane.leasing.model.CustomerPageResponse;
 import com.allane.leasing.model.PageRequest;
+import com.allane.leasing.service.AllaneCustomersService;
 import com.allane.leasing.util.CustomersHelper;
 
 @ExtendWith(MockitoExtension.class)

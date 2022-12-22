@@ -7,9 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.allane.leasing.api.CustomersApi;
-import com.allane.leasing.controller.service.AllaneCustomersService;
 import com.allane.leasing.model.CustomerPageResponse;
 import com.allane.leasing.model.PageRequest;
+import com.allane.leasing.service.AllaneCustomersService;
 
 @RestController
 public class AllaneCustomersController implements CustomersApi {

@@ -1,14 +1,14 @@
-package com.allane.leasing.controller.service.impl;
+package com.allane.leasing.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.allane.leasing.controller.service.AllaneCustomerService;
 import com.allane.leasing.mapper.CustomerMapper;
 import com.allane.leasing.model.Customer;
 import com.allane.leasing.persistent.entity.CustomerEntity;
 import com.allane.leasing.persistent.repository.CustomerRepository;
+import com.allane.leasing.service.AllaneCustomerService;
 
 @Service
 public class AllaneCustomerServiceImpl implements AllaneCustomerService {
@@ -19,8 +19,8 @@ public class AllaneCustomerServiceImpl implements AllaneCustomerService {
     
     private CustomerMapper customerMapper = CustomerMapper.INSTANCE;
     
-    public AllaneCustomerServiceImpl(CustomerRepository webhookRepository) {
-        customerRepository = webhookRepository;
+    public AllaneCustomerServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 
     @Override

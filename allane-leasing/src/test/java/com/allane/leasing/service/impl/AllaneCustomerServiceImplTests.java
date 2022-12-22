@@ -16,11 +16,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.allane.leasing.controller.service.impl.AllaneCustomerServiceImpl;
 import com.allane.leasing.mapper.CustomerMapper;
 import com.allane.leasing.model.Customer;
 import com.allane.leasing.persistent.entity.CustomerEntity;
 import com.allane.leasing.persistent.repository.CustomerRepository;
+import com.allane.leasing.service.impl.AllaneCustomerServiceImpl;
 import com.allane.leasing.util.CommonTestHelper;
 import com.allane.leasing.util.CustomerHelper;
 

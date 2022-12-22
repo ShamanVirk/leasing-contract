@@ -1,4 +1,4 @@
-package com.allane.leasing.controller.service.impl;
+package com.allane.leasing.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,11 +7,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.allane.leasing.controller.service.AllaneCustomersService;
 import com.allane.leasing.mapper.PageRequestMapper;
 import com.allane.leasing.model.CustomerPageResponse;
 import com.allane.leasing.persistent.entity.CustomerEntity;
 import com.allane.leasing.persistent.repository.CustomerRepository;
+import com.allane.leasing.service.AllaneCustomersService;
 
 @Service
 public class AllaneCustomersServiceImpl implements AllaneCustomersService {

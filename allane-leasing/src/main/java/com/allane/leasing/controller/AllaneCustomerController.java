@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import com.allane.leasing.api.CustomerApi;
-import com.allane.leasing.controller.service.AllaneCustomerService;
 import com.allane.leasing.model.Customer;
+import com.allane.leasing.service.AllaneCustomerService;
 
 @Controller
 public class AllaneCustomerController implements CustomerApi {

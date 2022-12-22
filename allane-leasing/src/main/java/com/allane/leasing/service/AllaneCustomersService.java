@@ -1,4 +1,4 @@
-package com.allane.leasing.controller.service;
+package com.allane.leasing.service;
 
 import com.allane.leasing.model.CustomerPageResponse;
 import com.allane.leasing.model.PageRequest;

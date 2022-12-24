@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: allane-leasing-ui
+spec:
+  selector:
+    matchLabels:
+      app: allane-leasing-ui
+  template:
+    metadata:
+      labels:
+        app: allane-leasing-ui
+    spec:
+      containers:
+      - name: allane-leasing-ui
+        image: allane-leasing-ui
+        ports:
+        - containerPort: 4200

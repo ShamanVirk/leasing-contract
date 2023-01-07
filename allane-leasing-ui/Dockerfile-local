@@ -8,4 +8,4 @@ RUN npm install
 
 ADD . /src
 
-ENTRYPOINT npm start
+ENTRYPOINT npm start --configuration=development

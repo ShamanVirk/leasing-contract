@@ -42,7 +42,7 @@ class AllaneCustomerServiceImplTests {
     }
     
     @Test
-    void testCreateWebhook() throws Exception {
+    void testCreateCustomer() throws Exception {
         Customer customer = CustomerHelper.createCustomer();
         CustomerEntity expectedCustomerEntity = CustomerHelper.createCustomerEntity();
         when(customerRepository.save(any(CustomerEntity.class))).thenReturn(expectedCustomerEntity);

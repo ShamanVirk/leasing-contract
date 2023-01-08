@@ -9,6 +9,8 @@ export class CustomerDataSource extends DataSource<Customer> {
 
   public loading$ = this.loadingSubject.asObservable();
 
+  public customersData: Customer[] = [];
+
   constructor(private customerService: CustomerService) {
     super();
   }
@@ -40,8 +42,9 @@ export class CustomerDataSource extends DataSource<Customer> {
         finalize(() => this.loadingSubject.next(false))
       )
       .subscribe((customers) => {
+        this.customersData = customers.overviewItems ? customers.overviewItems : [] ;
         return this.customerSubject.next(
-          customers.overviewItems === undefined ? [] : customers.overviewItems
+          this.customersData
         );
       });
   }

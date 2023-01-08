@@ -5,7 +5,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.ClassOrderer;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "/application-test.properties")
 @Transactional
+@TestClassOrder(ClassOrderer.OrderAnnotation.class)
+@Order(1)
 class AllaneCustomersIntegrationTests {
 
     @Autowired

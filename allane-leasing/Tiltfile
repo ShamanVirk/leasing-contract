@@ -15,7 +15,7 @@ local_resource(
   'rm -rf build/jar-staging && ' +
   'unzip -o build/libs/allane-leasing-0.0.1-SNAPSHOT.jar -d build/jar-staging && ' +
   'rsync --delete --inplace --checksum -r build/jar-staging/ build/jar',
-  deps=['src', 'build.gradle'], resource_deps=['allane-leasing-db'])
+  deps=['src', 'build.gradle'], resource_deps=['allane-leasing-db', 'allane-leasing-db-integration-tests'])
 
 docker_build_with_restart(
   'allane-leasing-image',
@@ -29,14 +29,17 @@ docker_build_with_restart(
   ],
 )
 
-k8s_yaml(['kubernetes-mariadb.yaml', 'kubernetes.yaml'])
+k8s_yaml(['kubernetes-mariadb.yaml', 'kubernetes-mariadb-integration-tests.yaml', 'kubernetes.yaml'])
 k8s_resource('allane-leasing-db', port_forwards=[
     3306,  # allane-leasing-db
+])
+k8s_resource('allane-leasing-db-integration-tests', port_forwards=[
+    3307,  # allane-leasing-db
 ])
 k8s_resource('allane-leasing',
 	port_forwards=[
 	    8001,  # app
 	    5001   # debugger
 	],
- 	resource_deps=['allane-leasing-compile', 'allane-leasing-db']
+ 	resource_deps=['allane-leasing-compile', 'allane-leasing-db', 'allane-leasing-db-integration-tests']
 )

@@ -14,7 +14,7 @@ import { CustomerDataSource } from './customer.datasource';
 })
 export class CustomerComponent implements OnInit, AfterViewInit {
 
-  displayedColumns = ['id', 'last-name', 'first-name', 'birthdate'];
+  displayedColumns = ['id', 'last-name', 'first-name', 'birthdate', 'actions'];
   dataSource: CustomerDataSource;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator = {} as MatPaginator;

@@ -2,10 +2,11 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { PageRequest } from 'build/openapi/models';
+import { Customer, PageRequest } from 'build/openapi/models';
 import { CustomerService } from 'build/openapi/services';
 import { merge, tap } from 'rxjs';
 import { CustomerDataSource } from './customer.datasource';
+import { AddDialogComponent } from './dialog/add/add.dialog.component';
 
 @Component({
   selector: 'app-customer',
@@ -14,7 +15,7 @@ import { CustomerDataSource } from './customer.datasource';
 })
 export class CustomerComponent implements OnInit, AfterViewInit {
 
-  displayedColumns = ['id', 'last-name', 'first-name', 'birthdate'];
+  displayedColumns = ['id', 'last-name', 'first-name', 'birthdate', 'actions'];
   dataSource: CustomerDataSource;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator = {} as MatPaginator;
@@ -47,5 +48,17 @@ export class CustomerComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe();
+  }
+
+  addNew() {
+    let customer : Customer = {firstName:'', lastName: '', birthDate: ''};
+    let dialogRef = this.dialog.open(AddDialogComponent, {
+      data: {body: customer}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 200) {
+        this.paginator._changePageSize(this.paginator.pageSize);
+      }
+    });
   }
 }

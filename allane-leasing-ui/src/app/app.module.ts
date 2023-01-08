@@ -22,12 +22,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiModule } from 'build/openapi/api.module';
 import { environment } from './../environments/environment';
 import { CustomerComponent } from './customer/customer.component';
+import { AddDialogComponent } from './customer/dialog/add/add.dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    CustomerComponent
+    CustomerComponent,
+    AddDialogComponent
   ],
   imports: [
     HttpClientModule,

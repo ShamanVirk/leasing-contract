@@ -1,0 +1,57 @@
+<div class="container">
+  <h3 mat-dialog-title>Add new Customer</h3>
+
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+    <div class="form">
+      <mat-form-field color="accent">
+        <textarea
+          matInput
+          #input
+          class="form-control"
+          placeholder="First name"
+          [(ngModel)]="data.firstName"
+          name="firstName"
+          required
+        ></textarea>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <textarea
+          matInput
+          #input
+          class="form-control"
+          placeholder="Last name"
+          [(ngModel)]="data.lastName"
+          name="lastName"
+          required
+        ></textarea>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <textarea
+          matInput
+          #input
+          class="form-control"
+          placeholder="Birthdate"
+          [(ngModel)]="data.birthDate"
+          name="birthdate"
+          required
+        ></textarea>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid || submitted" (click)="confirmAdd()">
+        Save
+      </button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+  </form>
+</div>

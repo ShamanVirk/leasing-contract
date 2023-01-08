@@ -2,8 +2,9 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { PageRequest } from 'build/openapi/models';
 import { CustomerService } from 'build/openapi/services';
-import { tap } from 'rxjs';
+import { merge, tap } from 'rxjs';
 import { CustomerDataSource } from './customer.datasource';
 
 @Component({
@@ -32,12 +33,18 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.paginator.page
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
       .pipe(
-        tap(() => this.dataSource.loadCustomers(
-          this.paginator.pageIndex,
-          this.paginator.pageSize
-        ))
+        tap(() => {
+          let direction = this.sort.direction === '' ? 'UNSORTED' : this.sort.direction.toUpperCase();
+          return this.dataSource.loadCustomers(
+            this.paginator.pageIndex,
+            this.paginator.pageSize,
+            direction as PageRequest["sort"]
+          )
+        })
       )
       .subscribe();
   }

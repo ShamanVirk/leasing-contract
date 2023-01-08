@@ -9,7 +9,7 @@ export class CustomerDataSource extends DataSource<Customer> {
 
   public loading$ = this.loadingSubject.asObservable();
 
-  public customersData: Customer[] = [];
+  public customerPageData: CustomerPageResponse = this.getEmptyCustomerPageResponse();
 
   constructor(private customerService: CustomerService) {
     super();
@@ -27,13 +27,13 @@ export class CustomerDataSource extends DataSource<Customer> {
   loadCustomers(
     page = 0,
     size = 10,
-    sortDirection = 'UNSORTED' as const,
+    sortDirection?: PageRequest["sort"],
   ) {
     this.loadingSubject.next(true);
     let pageRequest: PageRequest = {
       page: page,
       size: size,
-      sort:  sortDirection,
+      sort: sortDirection,
     };
     this.customerService
       .getAllCustomers({ page: pageRequest })
@@ -42,9 +42,10 @@ export class CustomerDataSource extends DataSource<Customer> {
         finalize(() => this.loadingSubject.next(false))
       )
       .subscribe((customers) => {
-        this.customersData = customers.overviewItems ? customers.overviewItems : [] ;
+        this.customerPageData = customers;
+        let customersData = customers.overviewItems ? customers.overviewItems : [] ;
         return this.customerSubject.next(
-          this.customersData
+          customersData
         );
       });
   }

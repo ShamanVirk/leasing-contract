@@ -1,10 +1,13 @@
-import { Customer, PageRequest } from 'build/openapi/models';
+import { Customer, CustomerPageResponse, PageRequest } from 'build/openapi/models';
 import { DataSource, CollectionViewer } from '@angular/cdk/collections';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, finalize, of } from 'rxjs';
 import { CustomerService } from 'build/openapi/services';
 
 export class CustomerDataSource extends DataSource<Customer> {
   private customerSubject = new BehaviorSubject<Customer[]>([]);
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+
+  public loading$ = this.loadingSubject.asObservable();
 
   constructor(private customerService: CustomerService) {
     super();
@@ -16,6 +19,7 @@ export class CustomerDataSource extends DataSource<Customer> {
 
   disconnect(collectionViewer: CollectionViewer): void {
     this.customerSubject.complete();
+    this.loadingSubject.complete();
   }
 
   loadCustomers(
@@ -23,6 +27,7 @@ export class CustomerDataSource extends DataSource<Customer> {
     size = 10,
     sortDirection = 'UNSORTED' as const,
   ) {
+    this.loadingSubject.next(true);
     let pageRequest: PageRequest = {
       page: page,
       size: size,
@@ -30,11 +35,26 @@ export class CustomerDataSource extends DataSource<Customer> {
     };
     this.customerService
       .getAllCustomers({ page: pageRequest })
-      .pipe()
+      .pipe(
+        catchError(() => of(this.getEmptyCustomerPageResponse())),
+        finalize(() => this.loadingSubject.next(false))
+      )
       .subscribe((customers) => {
         return this.customerSubject.next(
           customers.overviewItems === undefined ? [] : customers.overviewItems
         );
       });
+  }
+
+  getEmptyCustomerPageResponse() {
+    let t: CustomerPageResponse = {
+      numberOfItems: 0,
+      numberOfPages: 0,
+      page: 0,
+      size: 0,
+      sort: 'UNSORTED',
+      overviewItems: undefined
+    };
+    return t;
   }
 }

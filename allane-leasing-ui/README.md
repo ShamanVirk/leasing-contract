@@ -1,27 +1,35 @@
 # AllaneLeasingUi
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+## Technologies used:
+* Angular
+* Angular Material
+* OpenApi Generator
+* Docker
+* Tilt - https://tilt.dev/
 
-## Development server
+## Run (Recommended)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run all apps (front-end and back-end) using the tilt file from root directory.
 
-## Code scaffolding
+## Run
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Start up AllaneLeasingUi using Tilt. Tilt uses the Dockerfile-local to build the image of AllaneLeasingUi app and then uses that image to run in docker container.
 
-## Build
+```
+tilt up
+```
+Stop the app
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+tilt down
+```
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Tasks achieved
+* Implemented UIs:
+  * All customers
+  * Add new customer
+* Consumed the APIs:
+  * [POST] /customer
+  * [GET] /customers
+* Integrated OpenApi generator to consume the API specs
+* Integrated and used Angular Material

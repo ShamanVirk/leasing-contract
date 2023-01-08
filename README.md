@@ -1,4 +1,32 @@
-# OpenAPI - Leasing Contract
+# Allane Leasing UI, Allane Leasing BE and Allane Leasing DB
 
-The file [leasing.yaml](leasing.yaml) represent the defined contract that could be used.
-Maybe this link is usefull: https://openapi-generator.tech/docs/generators/typescript-angular
+## Technologies used - front-end:
+* Angular
+* Angular Material
+* OpenApi Generator
+* Docker
+* Tilt - https://tilt.dev/
+
+## Technologies used - back-end:
+* Spring Boot
+* Gradle
+* Project Lombok
+* OpenApi Generator
+* MariaDB
+* Flyway
+* Docker
+* Kubernetes
+* Tilt - https://tilt.dev/
+
+## Run (Recommended)
+
+Run all apps (front-end and back-end) using the tilt file from root directory.
+
+```
+tilt up
+```
+Stop the app
+
+```
+tilt down
+```

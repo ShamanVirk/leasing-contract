@@ -30,3 +30,15 @@ Stop the app
 ```
 tilt down
 ```
+
+See the progress in Web portal of Tilt (Confirm the url from terminal where Tilt is started): 
+```
+http://localhost:10350/
+```
+
+## Access Front end
+Once all the apps are up, access the Allane Leasing UI:
+
+```
+http://localhost:4200/
+```

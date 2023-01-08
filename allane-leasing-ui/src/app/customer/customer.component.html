@@ -1,29 +1,38 @@
-
-<div class="container mat-elevation-z8">
-
-  <mat-table [dataSource]="dataSource" #table  matSort class="mat-cell">
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
-      <mat-cell *matCellDef="let row" >{{row.id}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="last-name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.lastName}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="first-name">
-      <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.firstName}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="birthdate">
-      <mat-header-cell *matHeaderCellDef>Birthdate</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.birthDate}}</mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-
+<div class="spinner-container" *ngIf="dataSource.loading$ | async;">
+  <mat-spinner></mat-spinner>
 </div>
+  <div class="container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource" #table  matSort class="mat-cell" #loading>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+        <mat-cell *matCellDef="let row" >{{row.id}}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="last-name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.lastName}}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="first-name">
+        <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.firstName}}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="birthdate">
+        <mat-header-cell *matHeaderCellDef>Birthdate</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.birthDate}}</mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator
+                 [length]="dataSource.customerPageData.numberOfItems"
+                 [pageIndex]="dataSource.customerPageData.page"
+                 [pageSize]="dataSource.customerPageData.size"
+                 [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  
+  </div>
